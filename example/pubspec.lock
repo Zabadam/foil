@@ -65,6 +65,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  foil:
+    dependency: "direct dev"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.1.0"
   js:
     dependency: transitive
     description:
@@ -108,7 +115,7 @@ packages:
     source: hosted
     version: "2.0.0"
   sensors_plus:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sensors_plus
       url: "https://pub.dartlang.org"

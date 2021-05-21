@@ -2,7 +2,7 @@ name: foil
 description: >
   Wrap a widget with Foil, providing a rainbow shimmer
   that twinkles as the accelerometer moves.
-version: 0.0.1
+version: 0.1.0
 author:
 homepage:
 
@@ -13,6 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sensors_plus: ^1.0.1
 
 dev_dependencies:
   very_good_analysis: ^2.0.0
