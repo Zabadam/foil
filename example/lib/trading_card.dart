@@ -1,4 +1,6 @@
 /// Provides a `TradingCard` widget that reacts to accelerometer.
+///
+/// Employ [package:xl](https://pub.dev/packages/xl).
 library foil_demo;
 
 import 'package:flutter/material.dart';
@@ -6,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:xl/xl.dart';
 
 /// Creates a `TradingCard` widget that reacts to accelerometer.
+///
+/// Employ [package:xl](https://pub.dev/packages/xl).
 class TradingCard extends StatelessWidget {
   /// Creates a `TradingCard` widget that reacts to accelerometer.
+  ///
+  /// Employ [package:xl](https://pub.dev/packages/xl).
   const TradingCard({
     Key? key,
     required this.card,

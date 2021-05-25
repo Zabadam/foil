@@ -117,17 +117,19 @@ _ColorsAndStops _interpolate(Gradient a, Gradient b, double t) {
 /// To use a [LinearSteps] to paint directly on a canvas, see [createShader].
 ///
 /// {@tool snippet}
-///
-/// TODO: This sample paints ...
-///
+/// ### The right-most example is this `LinearSteps`
+/// ![the right-most example is this LinearSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the right-most example is this LinearSteps')
 /// ```dart
-/// final steps = Container(
+/// final stepBowLinear = Container(
 ///   decoration: BoxDecoration(
 ///     gradient: LinearSteps(
+///       tileMode: TileMode.repeated,
 ///       begin: Alignment.topLeft,
-///       end: Alignment(0.8, 0.0), // 10% of the width, so there are ten blinds.
-///       colors: [const Color(0xffee0000), const Color(0xffeeee00)], // red to yellow
-///       tileMode: TileMode.repeated, // repeats the gradient over the canvas
+///       end: Alignment.centerLeft,
+///       colors: [
+///         Colors.red, Colors.orange, Colors.yellow, Colors.green,
+///         Colors.blue, Colors.indigo, Colors.purple, Colors.pink,
+///       ],
 ///     ),
 ///   ),
 /// );
@@ -147,6 +149,9 @@ class LinearSteps extends Gradient {
   /// This gradient resembles a [LinearGradient] but its [colors]
   /// are not smoothly gradated between, but instead hard-transition,
   /// like steps.
+  ///
+  /// ### The right-most example is a `LinearSteps`
+  /// ![the right-most example is a LinearSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the right-most example is a LinearSteps')
   const LinearSteps({
     this.begin = Alignment.centerLeft,
     this.end = Alignment.centerRight,
@@ -349,24 +354,20 @@ class LinearSteps extends Gradient {
 /// To use a [RadialSteps] to paint directly on a canvas, see [createShader].
 ///
 /// {@tool snippet}
-///
-/// TODO: This sample paints ...
+/// ### The center example is this `RadialSteps`
+/// ![the center example is this RadialSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the center example is this RadialSteps')
 ///
 /// ```dart
-/// final steps = Container(
+/// final stepBowRadial = Container(
 ///   decoration: BoxDecoration(
 ///     gradient: RadialSteps(
-///       center: const Alignment(0.7, -0.6), // near the top right
-///       radius: 0.2,
 ///       tileMode: TileMode.repeated,
+///       radius: 0.5,
 ///       colors: [
-///         const Color(0xFFFFFF00), // yellow sun
-///         const Color(0xFF0099FF), // blue sky
+///         Colors.pink, Colors.purple, Colors.indigo, Colors.blue,
+///         Colors.green, Colors.yellow, Colors.orange, Colors.red,
 ///       ],
-///       stops: [0.4, 1.0],
-///     ),
-///   ),
-/// );
+///     );
 /// ```
 /// {@end-tool}
 ///
@@ -384,6 +385,9 @@ class RadialSteps extends Gradient {
   /// This gradient resembles a [RadialGradient] but its [colors]
   /// are not smoothly gradated between, but instead hard-transition,
   /// like steps.
+  ///
+  /// ### The center example is a `RadialSteps`
+  /// ![the center example is a RadialSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the center example is a RadialSteps')
   const RadialSteps({
     this.center = Alignment.center,
     this.radius = 0.5,
@@ -610,24 +614,21 @@ class RadialSteps extends Gradient {
 /// To use a [SweepSteps] to paint directly on a canvas, see [createShader].
 ///
 /// {@tool snippet}
-///
-/// TODO: This sample draws ...
+/// ### The left-most example is this `SweepSteps`
+/// ![the left-most example is this SweepSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the left-most example is this SweepSteps')
 ///
 /// ```dart
-/// final steps = Container(
+/// final stepBowSweep = Container(
 ///   decoration: BoxDecoration(
 ///     gradient: SweepSteps(
-///       center: FractionalOffset.center,
-///       startAngle: 0.0,
-///       endAngle: math.pi * 0.5, // quarter-circle sweep
 ///       tileMode: TileMode.repeated,
-///       colors: const <Color>[
-///         Color(0xFFEA4335), // red
-///         Color(0xFF4285F4), // blue
-///         Color(0xFF34A853), // green
-///         Color(0xFFFBBC05), // yellow
+///       startAngle: 0.0,
+///       endAngle: math.pi * 0.5, // ¼ rotation + TileMode.repeated
+///       // endAngle: math.pi * 2, // full rotation
+///       colors: [
+///         Colors.red, Colors.orange, Colors.yellow, Colors.green,
+///         Colors.blue, Colors.indigo, Colors.purple, Colors.pink,
 ///       ],
-///       stops: const <double>[0.0, 0.25, 0.5, 0.75, 1.0],
 ///     ),
 ///   )
 /// );
@@ -647,6 +648,9 @@ class SweepSteps extends Gradient {
   /// This gradient resembles a [SweepGradient] but its [colors]
   /// are not smoothly gradated between, but instead hard-transition,
   /// like steps.
+  ///
+  /// ### The left-most example is a `SweepSteps`
+  /// ![the left-most example is a SweepSteps](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif 'the left-most example is a SweepSteps')
   const SweepSteps({
     this.center = Alignment.center,
     this.startAngle = 0.0,

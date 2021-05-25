@@ -2,22 +2,30 @@
 library foil;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart'
-    show Gradient, GradientTransform, Matrix4, Rect, Shader, TextDirection;
+import 'package:flutter/rendering.dart';
 
 import 'scalar.dart';
 import 'transformation.dart';
 
-/// {@macro crinkle}
+/// Provide animation to a piece of `Foil` by wrapping it in a `Roll`
+/// with a specified `Crinkle`.
+///
+/// A new `Roll()` by default is not animated―because its `Crinkle` is
+/// [smooth]―but a [new Crinkle] *is* animated by default.
+///
+/// See each parameter for more information.
+///
+/// ![animated by \`Roll.crinkle\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/crinkle.gif 'animated by \`Roll.crinkle\`')
 class Crinkle with Diagnosticable {
-  /// {@template crinkle}
   /// Provide animation to a piece of `Foil` by wrapping it in a `Roll`
   /// with a specified `Crinkle`.
   ///
-  /// A new `Roll` by default is not animated, but a new `Crinkle` *is*.
+  /// A new `Roll()` by default is not animated―because its `Crinkle` is
+  /// [smooth]―but a [new Crinkle] *is* animated by default.
   ///
   /// See each parameter for more information.
-  /// {@endtemplate}
+  ///
+  /// ![animated by \`Roll.crinkle\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/crinkle_small.gif 'animated by \`Roll.crinkle\`')
   const Crinkle({
     this.isAnimated = true,
     this.shouldReverse = true,
@@ -28,8 +36,8 @@ class Crinkle with Diagnosticable {
     this.transform,
   });
 
-  /// A new `Roll` by default is not animated―by [smooth]―but
-  /// a [new Crinkle] *is* animated by default.
+  /// A new `Roll()` by default is not animated―because its `Crinkle` is
+  /// [smooth]―but a [new Crinkle] *is* animated by default.
   ///
   /// The default for `shouldReverse` is `true` and will cause the repeating
   /// animation (which drives one-way every [period]) to cycle between
@@ -40,16 +48,19 @@ class Crinkle with Diagnosticable {
   ///
   /// Any given animation value at "keyframe" `t` lies between [min] and [max].
   /// Say `t` is `0` as an animation has *just* begun, then [min] value
-  /// (defaults `-2.0`) and its mathematical sign are provided as an additional
-  /// translation multiplier to a `Foil.gradient` as a percentage-of-offset
-  /// in addition to any accelerometer sensor data.
+  /// (defaults `-2.0`) and its mathematical sign is the current animation
+  /// value. This is provided to the gradient-transformation process, as a
+  /// percentage-of-offset, to [transform].
+  /// - This transformation applies seperately from and in addition to
+  /// any accelerometer sensor data (unless `Foil.useSensor == false`).
+  /// - If no [transform] is provided, default will be a [TranslateGradient].
   ///
   /// After one [period] our `t` would be `1.0` and [max] (default is `2.0`)
   /// is provided as the current animation value.
   ///
   /// Furthermore, this animation value is finally multiplied by the relevant
   /// [Scalar.horizontal] or [Scalar.vertical] factor, as well as its
-  /// mathematical sign, before translating the gradient.
+  /// mathematical sign, before transforming the gradient.
   final double min, max;
 
   /// A final multiplier to scale the gradient translation, independently
@@ -73,6 +84,8 @@ class Crinkle with Diagnosticable {
   /// from `Roll.rollListenable` * `Crinkle.scalar`, where that \
   /// animation value ranges from [min] to [max] over [period].
   ///
+  /// If no [transform] is provided, default will be a [TranslateGradient].
+  ///
   /// [GradientTransform], which this function is expected to return, \
   /// is an abstract class with a single method that transforms the \
   /// gradient based on bounds and text direction.
@@ -86,7 +99,7 @@ class Crinkle with Diagnosticable {
   /// > When a [Gradient] creates its [Shader], it will call this method to \
   /// > determine what transform to apply to the shader for the given [Rect] and \
   /// > [TextDirection]. \
-  /// > Implementers may return null from this method, which achieves the same \
+  /// > Implementers may return `null` from this method, which achieves the same \
   /// > final effect as returning [Matrix4.identity].
   final TransformGradient? transform;
 
@@ -103,7 +116,13 @@ class Crinkle with Diagnosticable {
   );
 
   /// A gently animated `Crinkle`.
-  static const Crinkle twinkling = Crinkle(period: Duration(seconds: 15));
+  ///
+  /// ![animated by \`Crinkle.twinkling\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/crinkle_small.gif 'animated by \`Crinkle.twinkling\`')
+  static const Crinkle twinkling = Crinkle(period: Duration(seconds: 30));
+
+  /// An incredibly slow `Crinkle`.
+  static const Crinkle crawling =
+      Crinkle(min: -1.0, max: 1.0, period: Duration(minutes: 2));
 
   /// Testing.
   static const Crinkle loop = Crinkle(

@@ -69,6 +69,7 @@ class _DemonstrationState extends State<Demonstration> {
       letterSpacing: -30.0,
     );
 
+    /// A square emoji icon that will be wrapped in `Foil`.
     Widget buildSquare(String label) => Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -87,13 +88,20 @@ class _DemonstrationState extends State<Demonstration> {
           ],
         );
 
+    /// Returns a `Foil` that wraps a [buildSquare].
     Foil buildSample({
       required String label,
       required Gradient gradient,
+      Scalar? scalar,
+      Duration? speed,
+      Duration? duration,
     }) =>
         Foil(
           isUnwrapped: unwrapped,
           gradient: gradient,
+          scalar: scalar ?? Scalar.identity,
+          speed: speed ?? const Duration(milliseconds: 150),
+          duration: duration ?? const Duration(milliseconds: 500),
           child: buildSquare('\n$label'),
         );
 
@@ -120,8 +128,8 @@ class _DemonstrationState extends State<Demonstration> {
           ),
         ),
         drawer: const Roll(
-          // Changing these values will required a hot-reload.
-          crinkle: Crinkle(min: 0, max: 1, period: Duration(minutes: 1)),
+          // Changing the Crinkle will required a hot-reload.
+          crinkle: Crinkle.crawling,
           child: Foil(
             blendMode: BlendMode.srcIn,
             opacity: 0.45,
@@ -139,7 +147,6 @@ class _DemonstrationState extends State<Demonstration> {
               FittedBox(
                 child: Foil(
                   isUnwrapped: unwrapped,
-                  // blendMode: BlendMode.xor,
                   scalar: const Scalar(vertical: 4),
                   child: const Text(
                     'FOIL',
@@ -183,8 +190,8 @@ class _DemonstrationState extends State<Demonstration> {
                 ),
               ),
 
-              // [Foils] Palette
-              // ----------------
+              /// [Foils] Palette
+              /// ----------------
 
               Wrap(
                 alignment: WrapAlignment.center,
@@ -224,6 +231,7 @@ class _DemonstrationState extends State<Demonstration> {
                   buildSample(label: 'oilslick', gradient: Foils.oilslick),
                   buildSample(
                     label: '📋 copy of\nlinearRainbow',
+                    // Foil comes with GradientUtils!
                     gradient: Foils.linearRainbow.copyWith(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomLeft,
@@ -234,18 +242,59 @@ class _DemonstrationState extends State<Demonstration> {
                   ),
                   buildSample(
                     label: '📋 copy of\nsitAndSpin',
+                    // Foil comes with GradientUtils!
                     gradient: Foils.sitAndSpin.copyWith(
                       center: const Alignment(0, -2),
                       tileMode: TileMode.clamp,
                     ),
+                  ),
+
+                  /// Demonstrating parameters side-by-side for screenshots.
+                  buildSample(
+                    label: 'Duration\n(ms: 1500)',
+                    // gradient: Foils.stepBowSweep,
+                    gradient: Foils.stepBowRadial,
+                    // scalar: const Scalar.xy(0.5, 2.0),
+                    scalar: const Scalar.xy(0.5, 0.5),
+                    // speed: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 1500),
+                  ),
+                  buildSample(
+                    label: 'Duration\n(ms: 1000)',
+                    // gradient: Foils.stepBowSweep,
+                    gradient: Foils.stepBowRadial,
+                    // scalar: const Scalar.xy(2.0, 0.5),
+                    scalar: const Scalar.xy(0.5, 0.5),
+                    // speed: const Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 1000),
+                  ),
+                  buildSample(
+                    label: 'Duration\n(ms: 500)',
+                    // gradient: Foils.stepBowSweep,
+                    gradient: Foils.stepBowRadial,
+                    // scalar: const Scalar.xy(0.5, 2.0),
+                    scalar: const Scalar.xy(0.5, 0.5),
+                    // speed: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
+                  ),
+                  buildSample(
+                    label: 'Duration\n(ms: 200)',
+                    // gradient: Foils.stepBowSweep,
+                    gradient: Foils.stepBowRadial,
+                    // scalar: const Scalar.xy(2.0, 0.5),
+                    scalar: const Scalar.xy(0.5, 0.5),
+                    // speed: const Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                   ),
                 ],
               ),
 
               const SizedBox(height: 50),
 
-              /// 🐲 Gyarados [TradingCard]s (using package:XL)
-              // -----------------------------------------------
+              /// 🐲 Gyarados [TradingCard]s
+              /// https://github.com/Zabadam/foil/blob/main/example/lib/trading_card.dart
+              /// Employs [package:xl](https://pub.dev/packages/xl)
+              /// --------------------------------------------------
 
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -258,8 +307,9 @@ class _DemonstrationState extends State<Demonstration> {
                       isUnwrapped: unwrapped,
                       opacity: 0.3,
                       // Foil comes with GradientUtils!
-                      gradient: Foils.sitAndSpin
-                          .copyWith(center: const Alignment(-1, -2.5)),
+                      gradient: Foils.sitAndSpin.copyWith(
+                        center: const Alignment(-1, -2.5),
+                      ),
                       child: TradingCard(
                         card: cards.first,
                         width: 400,
@@ -306,7 +356,7 @@ class _DemonstrationState extends State<Demonstration> {
               const SizedBox(height: 25),
 
               /// Sheets of Foil
-              // ---------------
+              /// ---------------
 
               const SizedBox(height: 10),
               Center(
@@ -330,12 +380,16 @@ class _DemonstrationState extends State<Demonstration> {
                         TextSpan(
                           text: 'Foils.rainbow\n',
                           style: TextStyle(
-                              fontSize: 60, fontWeight: FontWeight.w900),
+                            fontSize: 60,
+                            fontWeight: FontWeight.w900,
+                          ),
                           children: [
                             TextSpan(
                               text: 'a decal gradient',
                               style: TextStyle(
-                                  fontSize: 40, fontWeight: FontWeight.w100),
+                                fontSize: 40,
+                                fontWeight: FontWeight.w100,
+                              ),
                             ),
                           ],
                         ),

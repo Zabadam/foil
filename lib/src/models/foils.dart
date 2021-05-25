@@ -1,6 +1,8 @@
 /// Provides `Foils` abstract class with static `const` [Gradient]s.
 library foil;
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'steps.dart';
@@ -8,12 +10,21 @@ import 'steps.dart';
 /// {@template foils}
 /// Pre-rolled `Gradient`s for deployment as `Foil.gradient`
 /// or anywhere else a `Gradient` is called for.
-/// - [linearRainbow]
-/// - [linearLooping]
-/// - [linearLoopingReversed]
-/// - [gymClassParachute]
-/// - [oilslick]
 /// {@endtemplate}
+///
+/// Like some things, but want ot change others? Try out `Gradient.copyWith()`.
+/// - [linearRainbow] + [linearReversed]
+/// - [linearLooping] + [linearLoopingReversed]
+/// - [gymClassParachute] + [sitAndSpin]
+/// - [oilslick]
+/// - [stepBowLinear], [stepBowRadial] + [stepBowSweep]
+/// - [rainbow] decal
+///
+/// ![\`Foils.rainbow\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.rainbow.gif) \
+/// ![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)
+/// ![\`oilslick\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.oilslick.gif) \
+/// ![\`sitAndSpin\`, and \`gymClassParachute\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif) \
+/// ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif)
 abstract class Foils {
   // ------------------
   // LINEAR GRADIENTS |
@@ -25,6 +36,8 @@ abstract class Foils {
   ///
   /// To create a new `LinearGradient` that has these colors,
   /// consider `Foils.linearRainbow.copyWith(...)`.
+  ///
+  /// ![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)
   static const linearRainbow = LinearGradient(
     tileMode: TileMode.repeated,
     begin: Alignment.topLeft,
@@ -46,6 +59,8 @@ abstract class Foils {
   ///
   /// To create a new `LinearGradient` that has these colors,
   /// consider `Foils.linearReversed.copyWith(...)`.
+  ///
+  /// ![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)
   static const linearReversed = LinearGradient(
     tileMode: TileMode.repeated,
     begin: Alignment.topLeft,
@@ -76,6 +91,8 @@ abstract class Foils {
   /// To create a new `LinearGradient` that has these colors,
   /// consider `Foils.linearLooping.copyWith(...)`.
   /// {@endtemplate}
+  ///
+  /// ![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)
   static const linearLooping = LinearGradient(
     tileMode: TileMode.repeated,
     begin: Alignment.topLeft,
@@ -104,6 +121,8 @@ abstract class Foils {
   ///
   /// To create a new `LinearGradient` that has these colors,
   /// consider `Foils.linearLoopingReversed.copyWith(...)`.
+  ///
+  /// ![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)
   static const linearLoopingReversed = LinearGradient(
     tileMode: TileMode.repeated,
     begin: Alignment.topLeft,
@@ -138,6 +157,7 @@ abstract class Foils {
   /// consider `Foils.oilslick.copyWith(...)`,
   /// providing desired `center`, `radius`, or `focal`, etc.
   ///
+  /// ![\`oilslick\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.oilslick.gif)
   /// 🔗 [source](https://www.reddit.com/r/mildlyinteresting/comments/30ipxb/this_oil_slick_puddle_in_my_driveway/)
   /// ![An oilslick on a driveway](https://i.imgur.com/S0Gx5Lc.jpg)
   static const oilslick = RadialGradient(
@@ -164,17 +184,22 @@ abstract class Foils {
   /// but with blurry edges as if it were spinning.
   ///
   /// To create a new `SweepGradient` that has these colors, consider \
-  /// `Foils.sitAndSpin.copyWith(...)`,  providing the desired \
-  /// `startAngle`, `endAngle`, and/or `center`.
+  /// `Foils.sitAndSpin.copyWith(...)`, such as:
+  /// > ```dart
+  /// > copyWith(startAngle: 0.0, endAngle: 0.5 * 3.1416) // 0.5 * math.pi
+  /// > // To use math.pi: import 'dart:math' as math`;
+  /// > ```
   ///
-  /// See [gymClassParachute] for a sweep with hard steps.
+  /// to align the four colors differently.
   ///
+  /// See [gymClassParachute] for a sweep with hard steps. \
+  /// ![\`sitAndSpin\`, and \`gymClassParachute\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif) \
   /// ![Gym Class Parachute Activity - gif](https://i.imgur.com/mjFfsHx.gif)
   static const sitAndSpin = SweepGradient(
     tileMode: TileMode.repeated,
     startAngle: 0.0,
-    endAngle: 3.14159265 * 0.5, // ¼ rotation + TileMode.repeated
-    // endAngle: 3.14159265 * 2, // full rotation
+    endAngle: math.pi * 0.5, // ¼ rotation + TileMode.repeated
+    // endAngle: math.pi * 2, // full rotation
     colors: <Color>[
       Color(0xFFEA4335),
       // Color(0xFFB65BF7), // additional purple, but not "classic"
@@ -198,6 +223,8 @@ abstract class Foils {
   ///
   /// `Foils.rainbow.copyWith(tileMode: TileMode.clamp)` would extend
   /// the red band to infinity.
+  ///
+  /// ![\`Foils.rainbow\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.rainbow.gif)
   static const rainbow = RadialSteps(
     tileMode: TileMode.decal,
     radius: 0.6,
@@ -226,16 +253,25 @@ abstract class Foils {
   /// A multicolored [SweepSteps] that looks like a children's
   /// gymnasium teamwork-activity parachute.
   ///
-  /// To create a new `SweepSteps` that has these colors, consider \
-  /// `Foils.gymClassParachute.copyWith(...)`,  providing the desired \
-  /// `startAngle`, `endAngle`, and/or `center`.
+  /// To create a new `SweepSteps` that has these colors, \
+  /// consider `Foils.gymClassParachute.copyWith(...)`, such as:
+  /// > ```dart
+  /// > copyWith(startAngle: 0.0, endAngle: 0.5 * 3.1416) // 0.5 * math.pi
+  /// > // To use math.pi: import 'dart:math' as math`;
+  /// > ```
   ///
+  /// to align the four colors differently.
+  ///
+  /// See [gymClassParachute] for a sweep with hard steps. \
+  /// ![\`sitAndSpin\`, and \`gymClassParachute\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif) \
   /// ![Gym Class Parachute Activity - gif](https://i.imgur.com/mjFfsHx.gif)
   static const gymClassParachute = SweepSteps(
     tileMode: TileMode.repeated,
-    startAngle: 0.0,
-    endAngle: 3.14159265 * 0.5, // ¼ rotation + TileMode.repeated
-    // endAngle: 3.14159265 * 2, // full rotation
+    startAngle: -0.0625 * math.pi,
+    endAngle: 0.4375 * math.pi, // ¼ rotation + TileMode.repeated
+    /// full rotation
+    // startAngle: 0.0,
+    // endAngle: 2.0 * math.pi,
     colors: <Color>[
       Color(0xFFEA4335),
       // Color(0xFFB65BF7), // additional purple, but not "classic"
@@ -250,6 +286,8 @@ abstract class Foils {
   ///
   /// To create a new `LinearSteps` that has these colors,
   /// consider `Foils.stepBowLinear.copyWith(...)`.
+  ///
+  /// ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif)
   static const stepBowLinear = LinearSteps(
     tileMode: TileMode.repeated,
     begin: Alignment.topLeft,
@@ -271,6 +309,8 @@ abstract class Foils {
   /// To create a new `RadialSteps` that has these colors,
   /// consider `Foils.stepBowRadial.copyWith(...)`
   /// providing desired `radius`, `center`, or `focal`, etc.
+  ///
+  /// ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif)
   static const stepBowRadial = RadialSteps(
     tileMode: TileMode.repeated,
     radius: 0.5,
@@ -291,11 +331,13 @@ abstract class Foils {
   /// To create a new `SweepSteps` that has these colors,
   /// consider `Foils.stepBowSweep.copyWith(...)`
   /// providing desired `startAngle`, `endAngle`, or `center`, etc.
+  ///
+  /// ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif)
   static const stepBowSweep = SweepSteps(
     tileMode: TileMode.repeated,
     startAngle: 0.0,
-    endAngle: 3.14159265 * 0.5, // ¼ rotation + TileMode.repeated
-    // endAngle: 3.14159265 * 2, // full rotation
+    endAngle: math.pi * 0.5, // ¼ rotation + TileMode.repeated
+    // endAngle: math.pi * 2, // full rotation
     colors: [
       Colors.red,
       Colors.orange,

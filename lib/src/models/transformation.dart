@@ -52,6 +52,7 @@ class TranslateGradient extends GradientTransform with Diagnosticable {
   /// the gradient forward to the right. If it is `rtl`, positive [percentX]
   /// values translate the gradient forward to the left.
   final double percentX, percentY;
+
   @override
   Matrix4? transform(Rect bounds, {TextDirection? textDirection}) =>
       Matrix4.translationValues(

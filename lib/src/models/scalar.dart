@@ -3,9 +3,27 @@ library foil;
 
 import 'package:flutter/foundation.dart';
 
-/// {@macro scalar}
+/// A `Scalar` provides an opportunity to scale axis-based `double` data.
+/// Default constructor takes named paramters per axis. Use [Scalar.xy]
+/// as a shortcut to only provide positional `double` values.
+/// - `Scalar.xy(5)` is equivalent to
+///   `Scalar(horizontal: 5, vertical: 5)` and still `const`.
+///
+/// ### For use with `Foil`s
+/// Accelerometer sensor data may be scaled independently before they
+/// translate to gradient "twinkling" transformation (offset/translation).
+///
+/// Scale up the motion factor by providing [Scalar.horizontal] or
+/// [Scalar.vertical] a value greater than `1.0`,
+/// or scale down the influence by providing `0 <= scalar <= 1.0`.
+///
+/// ![scaling accelerometer data](https://raw.githubusercontent.com/Zabadam/foil/master/doc/scalar_small.gif 'scaling accelerometer data')
+///
+/// ### For use with `Roll`s
+/// In the case of a `Roll`, a `Scalar` object provides a means to direct
+/// animation of the gradient if `isAnimated` is true. Also see the
+/// `min` and `max` values.
 class Scalar with Diagnosticable {
-  /// {@template scalar}
   /// A `Scalar` provides an opportunity to scale axis-based `double` data.
   /// Default constructor takes named paramters per axis. Use [Scalar.xy]
   /// as a shortcut to only provide positional `double` values.
@@ -20,11 +38,12 @@ class Scalar with Diagnosticable {
   /// [Scalar.vertical] a value greater than `1.0`,
   /// or scale down the influence by providing `0 <= scalar <= 1.0`.
   ///
+  /// ![scaling accelerometer data](https://raw.githubusercontent.com/Zabadam/foil/master/doc/scalar_small.gif 'scaling accelerometer data')
+  ///
   /// ### For use with `Roll`s
   /// In the case of a `Roll`, a `Scalar` object provides a means to direct
   /// animation of the gradient if `isAnimated` is true. Also see the
   /// `min` and `max` values.
-  /// {@endtemplate}
   const Scalar({
     this.horizontal = 1.0,
     this.vertical = 1.0,
