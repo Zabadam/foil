@@ -1,3 +1,3 @@
 # Foil Changelog
-## **[0.1.0]** - 20 MAY 21
-- 
+## **[0.9.0]** - 24 MAY 21
+- Initial release.

@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  xl: any
 
 dev_dependencies:
   foil:
