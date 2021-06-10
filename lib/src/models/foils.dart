@@ -5,7 +5,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'steps.dart';
+import 'package:spectrum/spectrum.dart';
+
+// import 'steps.dart';
 
 /// {@template foils}
 /// Pre-rolled `Gradient`s for deployment as `Foil.gradient`
@@ -144,6 +146,45 @@ abstract class Foils {
       Colors.indigo,
       Colors.purple,
       Colors.pink,
+    ],
+  );
+
+  /// A `LinearGradient` from topLeft to bottomRight that resembles
+  /// a pane of glass, with streaks of more-opaque white slicing the gradient.
+  static const glass = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0x64FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.25),
+      Color(0xA2FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.40),
+      Color(0x74FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.29),
+      Color(0x94FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.37),
+      Color(0x64FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.25),
+      Color(0x71FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.28),
+      Color(0x41FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.16),
+      Color(0x51FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.20),
+      Color(0x92FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.36),
+      Color(0x59FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.23),
+      Color(0x38FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.15),
+      Color(0x25FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.10),
+      Color(0x41FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.16),
+      Color(0x64FFFFFF), // const Color(0xFFFFFFFF).withOpacity(0.25),
+    ],
+    stops: [
+      0.00,
+      0.10,
+      0.10,
+      0.15,
+      0.30,
+      0.30,
+      0.50,
+      0.50,
+      0.60,
+      0.60,
+      0.80,
+      0.85,
+      0.85,
+      1.00,
     ],
   );
 

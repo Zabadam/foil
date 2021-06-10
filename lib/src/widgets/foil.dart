@@ -6,13 +6,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 
+import 'package:spectrum/spectrum.dart';
+
 import '../animation.dart';
 import '../models/crinkle.dart';
 import '../models/foils.dart';
-import '../models/nill.dart';
 import '../models/scalar.dart';
 import '../models/sheet.dart';
-import '../models/steps.dart';
 import 'roll.dart';
 import 'sensors.dart';
 
@@ -316,8 +316,8 @@ class Foil extends StatefulWidget {
   ///
   /// See [nillLG], et al.
   ///
+  /// [![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)]((https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif)) \
   /// ![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif)
-  /// [![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)]((https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif))
   final Gradient? unwrappedGradient;
 
   /// A [Scalar] provides an opportunity to modify horizontal and vertical
@@ -349,7 +349,10 @@ class Foil extends StatefulWidget {
   /// when combined with bespoke `Gradient`s.
   final BlendMode blendMode;
 
-  /// Default is `true`. Optionally determine if this `Foil` is agnostic
+  /// Default is `true`. \
+  /// ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_small.gif)
+  ///
+  /// Optionally determine if this `Foil` is agnostic
   /// to accelerometer sensors data. In this case, it will be a simple static
   /// gradient mask.
   ///
@@ -358,8 +361,6 @@ class Foil extends StatefulWidget {
   ///
   /// Those `Crinkle` animations can be applied regardless of the value
   /// of [useSensor].
-  ///
-  /// ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_small.gif)
   final bool useSensor;
 
   /// Wrap this `child` in `Foil`. \
@@ -381,7 +382,7 @@ class Foil extends StatefulWidget {
   /// That is to say, [speed] is a `Duration` that dictates the animation
   /// of the transformation (offset/translation) of this `Foil`'s [gradient].
   ///
-  /// [![dropping the phone with different \`speed\`s](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed.gif 'dropping the phone with different \`speed\`s')
+  /// [![dropping the phone with different \`speed\`s](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed_small.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed.gif 'dropping the phone with different \`speed\`s')
   final Duration speed;
 
   /// The `Curve` for the animation of this `Foil`, either by
@@ -484,18 +485,7 @@ class _FoilState extends State<Foil> {
 
     /// For smoother `lerp`s when unwrapping `Foil`.
     final effectiveGradient = widget.isUnwrapped
-        ? widget.unwrappedGradient ??
-            (gradient.runtimeType == RadialGradient
-                ? nillRG
-                : gradient.runtimeType == SweepGradient
-                    ? nillSG
-                    : gradient.runtimeType == LinearSteps
-                        ? nillLS
-                        : gradient.runtimeType == RadialSteps
-                            ? nillRS
-                            : gradient.runtimeType == SweepSteps
-                                ? nillSS
-                                : nillLG)
+        ? widget.unwrappedGradient ?? gradient.asNill
         : gradient.scale(widget.opacity);
 
     /// The `SensorListener` and `AnimatedFoil` need to be built regardless of

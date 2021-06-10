@@ -9,8 +9,10 @@ library foil;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:spectrum/spectrum.dart';
+
 import '../foil.dart';
-import 'models/tween.dart';
+// import 'models/tween.dart';
 import 'rendering.dart';
 
 /// {@macro animated_foil}

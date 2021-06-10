@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:foil/foil.dart';
+import 'package:spectrum/spectrum.dart';
 
 import 'trading_card.dart';
 

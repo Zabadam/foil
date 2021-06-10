@@ -11,7 +11,7 @@
 ///    - `RadialSteps`
 ///    - `SweepSteps` 😏
 ///
-/// 1. `Foils` abstract class with a variety of static const `Gradient`s
+/// 1. `Foils` abstract class with a variety of `Gradient`s
 ///
 /// 2. `GradientUtils` extensions for each `Gradient`
 ///    - `Gradient copyWith()` methods

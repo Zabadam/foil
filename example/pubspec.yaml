@@ -14,9 +14,9 @@ dependencies:
 dev_dependencies:
   foil:
     path: ../
+  spectrum:
+    path: ../../spectrum/
   very_good_analysis: ^2.0.0
-  flutter_test:
-    sdk: flutter
 
 flutter:
   uses-material-design: true

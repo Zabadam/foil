@@ -1,16 +1,20 @@
-# Foil
-Wrap a widget with `Foil`, providing a rainbow shimmer \
+# 🌈 Foil
+## [pub.dev Listing](https://pub.dev/packages/foil) | [API Doc](https://pub.dev/documentation/foil/latest) | [GitHub](https://github.com/Zabadam/foil)
+#### API References: [`Foil`](https://pub.dev/documentation/foil/latest/foil/Foil-class.html) | [`Foils`](https://pub.dev/documentation/foil/latest/foil/Foils-class.html) | [`Roll`](https://pub.dev/documentation/foil/latest/foil/Roll-class.html) | [`Crinkle`](https://pub.dev/documentation/foil/latest/foil/Crinkle-class.html) | [`Foil.sheet`](https://pub.dev/documentation/foil/latest/foil/Foil/Foil.sheet.html) | [`Steps`](https://pub.dev/documentation/foil/latest/foil/LinearSteps-class.html) | [`GradientUtils`](https://pub.dev/documentation/foil/latest/foil/LinearGradientUtils.html)
+
+<br />
+
+Wrap a widget with `Foil`, providing a rainbow shimmer
 that twinkles as the accelerometer moves.
 
-Consider [holographic Pokémon trading cards](https://github.com/Zabadam/foil/blob/master/example/lib/main.dart#L294 'Foil Demo app has a foil-wrapped card (that itself rotates with help of \'package:xl\')'), some credit cards, \
-or an [oil slick](https://google.com/search?q=oil+slick&tbm=isch 'Google image search for "oil slick"') on the road. \
-[![Foil header](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil.gif 'Get started! import \'package:foil/foil.dart\'')](https://pub.dev/packages/foil)
-![\`Foil\` \`Drawer\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/drawer.gif 'Foil Drawer')
+Consider [holographic Pokémon trading cards](https://github.com/Zabadam/foil/blob/master/example/lib/main.dart#L294 'Foil Demo app has a foil-wrapped card (that itself rotates with help of \'package:xl\')'), some credit cards, 
+or an [oil slick](https://google.com/search?q=oil+slick&tbm=isch 'Google image search for "oil slick"') on the road.
 
-
-
+| [![Foil header](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil.gif 'Get started! import \'package:foil/foil.dart\'')](https://pub.dev/packages/foil) | ![\`Foil\` \`Drawer\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/drawer.gif 'Foil Drawer') |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
 
 ## 📚 Table of Contents
+- 🌈 [Foil](#foil)
 - [Getting Started](#getting-started)
   - [Accelerometer](#accelerometer)
   - [Transitioning](#transitioning)
@@ -23,23 +27,24 @@ or an [oil slick](https://google.com/search?q=oil+slick&tbm=isch 'Google image s
   - [`GradientUtils` Extensions](#gradientutils-extensions)
   - [`Foils`](#foils)
 - [Reference](#reference)
-  - [📖 API Documentation](#-api-documentationhttpspubdevdocumentationfoillatest)
+  - 📖 [API Documentation](#-api-documentationhttpspubdevdocumentationfoillatest)
   - [`Foil` Demo: 👷‍♂️ source code, 📲 built APK](#foil-demo--source-codehttpsgithubcomzabadamfoiltreemainexamplelib--built-apkhttpsgithubcomzabadamfoilblobmainexamplebuildappoutputsflutter-apkapp-releaseapk)
-  - [🛣️ Roadmap](#️-roadmap)
-  - [🐞 Bugs](#-bugs)
+  - 🛣️ [Roadmap](#️-roadmap)
+  - 🐞 [Bugs](#-bugs)
+- 🐸 [More by Zaba](#-zabaapp--simple-packages-simple-names)
 
-# Getting Started
+# [Getting Started](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 Wrap a widget by providing it as `Foil.child`.
 
 Use any [`gradient`](#foils '`Foils` is a selection of pre-rolled `Gradient`s')
-of choice and determine the `blendMode` to mask the gradient \
-onto the child in different ways. Default is `BlendMode.srcATop` which will \
-reveal the child through the gradient if the gradient has opacity or if \
+of choice and determine the `blendMode` to mask the gradient
+onto the child in different ways. Default is `BlendMode.srcATop` which will
+reveal the child through the gradient if the gradient has opacity or if
 `Foil.opacity` is provided a non-`1.0` value. 
 - Use `BlendMode.srcIn` to paint *only* the gradient and use the child as a mask.
 
-Flag `isUnwrapped` toggles this `Foil`'s invisibility. Default is `false.` \
-When this value is changed, the gradient will smoothly animate to a disabled \
+Flag `isUnwrapped` toggles this `Foil`'s invisibility. Default is `false.`
+When this value is changed, the gradient will smoothly animate to a disabled
 state, leaving only the `child` behind.
 
 ```dart
@@ -59,45 +64,48 @@ class Example extends StatelessWidget {
 ```
 > # [![\`Foil\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif 'Get started! import \'package:foil/foil.dart\'')](https://pub.dev/packages/foil) Quickstart 
 > Plop an instance of this `const Example()` in a running `ListView` 
-> you've got open in a code editor. \
-> Run terminal command `flutter pub add foil`. \
+> you've got open in a code editor.
+> Run terminal command `flutter pub add foil`.
 > `import 'package:foil/foil.dart'`
 
+## [Accelerometer](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 
-## Accelerometer
-Disable this `Foil`'s reaction to accelerometer sensor motion by \
+> [![foily, oscillating Gyarados card with package:xl](https://raw.githubusercontent.com/Zabadam/foil/master/doc/gyarados.gif 'the card rotates with the help of package:xl')](https://github.com/Zabadam/foil/blob/master/example/lib/main.dart#L294)
+> This [trading card](https://github.com/Zabadam/foil/blob/main/example/lib/trading_card.dart) is wrapped in *two* `Foil` widgets offering different gradients!
+> Further widget transformation provided by [package:xl](https://pub.dev/packages/xl).
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
+
+Disable this `Foil`'s reaction to accelerometer sensor motion by
 `useSensor: false`. Default is `true`.
 - In this case, you may want to employ a [`Roll` with `Crinkle`s](#crinkles).
 
-Influence the intensity of this `Foil`'s reaction to accelerometer motion \
+Influence the intensity of this `Foil`'s reaction to accelerometer motion
 by providing a `speed` and custom [`Scalar`](https://pub.dev/documentation/foil/latest/foil/Scalar-class.html 'pub.dev documentation: Scalar') property `Foil.scalar`. 
-- Default is `Scalar.identity` which has both a `horizontal` and `vertical` \
+- Default is `Scalar.identity` which has both a `horizontal` and `vertical`
 multiplier of `+1.0`.
 
-[![dropping the phone with different \`speed\`s](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed.gif 'dropping the phone with different \`speed\`s')
+[![dropping the phone with different \`speed\`s](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed_small.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/speed.gif 'dropping the phone with different \`speed\`s')
 [![scaling accelerometer data](https://raw.githubusercontent.com/Zabadam/foil/master/doc/scalar_small.gif 'scaling accelerometer data')](https://raw.githubusercontent.com/Zabadam/foil/master/doc/scalar_small.gif 'scaling accelerometer data')
 
-> [![foily, oscillating Gyarados card with package:xl](https://raw.githubusercontent.com/Zabadam/foil/master/doc/gyarados.gif 'the card rotates with the help of package:xl')](https://github.com/Zabadam/foil/blob/master/example/lib/main.dart#L294) \
-> This [trading card](https://github.com/Zabadam/foil/blob/main/example/lib/trading_card.dart) is wrapped in *two* `Foil` widgets offering different gradients! \
-> Further widget transformation provided by [package:xl](https://pub.dev/packages/xl).
 
-## Transitioning
-Control how rapidly this `Foil` transforms its gradient with `Foil.speed` \
+
+## [Transitioning](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+Control how rapidly this `Foil` transforms its gradient with `Foil.speed`
 and define the animation `curve`. Defaults are `150ms` and `Curves.ease`.
 
-| [![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif 'Changing gradients or disabling the Foil both smoothly animate')](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif) | Furthermore, provide `Foil.duration` to dictate how long intrinsic animations of gradient will take. `Foil.duration` is also used if `isUnwrapped` is made `true` as the duration over which `Foil.gradient` will lerp to an appropriately-Typed transparent gradient for tweening. There is hard-coded recognition for linear, radial, and sweep gradients, as well as the additional [`Steps`](#steps) variants this package provides. Falls back to a transparent `LinearGradient` if `Type` cannot be matched. Override with `Foil.unwrappedGradient`. Click image to view full size. |
-| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif 'Changing gradients or disabling the Foil both smoothly animate')](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif) | Furthermore, provide `Foil.duration` to dictate how long intrinsic animations of gradient will take. `Foil.duration` is also used if `isUnwrapped` is made `true` as the duration over which `Foil.gradient` will lerp to an appropriately-Typed transparent gradient for tweening. There is hard-coded recognition for linear, radial, and sweep gradients, as well as the additional [`Steps`](#steps) variants this package provides. Falls back to a transparent `LinearGradient` if `Type` cannot be matched. Override with `Foil.unwrappedGradient`. Click images to view full size. | [![unwrapping at various Durations](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif) |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 > Upon completion of any tween to a new `gradient`, this `Foil` will call 
 > `onEnd`, an optional void callback.
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
 
-[![unwrapping at various Durations](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif)
+# [Advanced Usage](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 
-# Advanced Usage
-## `Roll`s
-Wrap any `Foil` (or many of them!) in a [`Roll`](https://pub.dev/documentation/foil/latest/foil/Roll-class.html 'pub.dev documentation: Roll') higher in the widget tree \
+## [`Roll`s](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+Wrap any `Foil` (or many of them!) in a [`Roll`](https://pub.dev/documentation/foil/latest/foil/Roll-class.html 'pub.dev documentation: Roll') higher in the widget tree
 to provide some inherited properties.
 
-A gradient provided by an ancestral `Roll` may be used by as a `Foil.gradient` \
+A gradient provided by an ancestral `Roll` may be used by as a `Foil.gradient`
 if one is not explicitly perscribed in the `Foil`.
 - If neither an ancestral `Roll` nor a `Foil` dictates its own `gradient`, 
   then the default is `Foils.linearLooping`.
@@ -106,11 +114,11 @@ if one is not explicitly perscribed in the `Foil`.
 > One day a `Roll` will also provide the option to "cut" any descendent `Foil`
 > from a single shared gradient sheet that covers a space the size of the `Roll`.
 
-`Roll`s can also serve to provide animation properties to a descendent `Foil`, \
+`Roll`s can also serve to provide animation properties to a descendent `Foil`,
 regardless of whether its serving its gradient. 
 
-## `Crinkle`s
-These animations are in addition to any accelerometer sensors data \
+## [`Crinkle`s](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+These animations are in addition to any accelerometer sensors data
 already animating the `Foil` unless `Foil.useSensors: false`.
 
 
@@ -123,17 +131,19 @@ already animating the `Foil` unless `Foil.useSensors: false`.
 > - Build your own or opt to `Crinkle.copyWith` a preset
 >   - `isAnimated`, `shouldReverse` flags
 >   - Use `period` to determine the animation loop `Duration` 
->   - The `scalar` property can be used to invert, scale, or negate axes \
+>   - The `scalar` property can be used to invert, scale, or negate axes
 >   (this is a `Scalar` object like a `Foil` uses to scale its sensors data)
 
-## `TransformGradient`
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
+
+## [`TransformGradient`](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 This is the [definition of a function](https://pub.dev/documentation/foil/latest/foil/TransformGradient.html 'pub.dev documentation: TransformGradient')
-that takes in a scaled `double x` and `double y` \
-and returns a `GradientTransform` object. That object is used when a `Foil`'s \
+that takes in a scaled `double x` and `double y`
+and returns a `GradientTransform` object. That object is used when a `Foil`'s
 gradient shader is drawn by calling its `transform()` method.
 
-To provide a custom transformation as `Crinkle.transform`, extend that class \
-and override `transform()`, returning some `Matrix4`, such as the default \
+To provide a custom transformation as `Crinkle.transform`, extend that class
+and override `transform()`, returning some `Matrix4`, such as the default
 for this package:
 
 ```dart
@@ -156,27 +166,28 @@ class TranslateGradient extends GradientTransform {
 }
 
 ```
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
 
-# Extra Goodies
-This package also comes with some other offerings. \
+# [Extra Goodies](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+This package also comes with some other offerings.
 Some expand on `Gradient` functionality, and others make them simpler to use.
 
-Up first is named [`Foil.sheet`](https://pub.dev/documentation/foil/latest/foil/Foil/Foil.sheet.html) which functions like a self-contained \
-`Foil` + `AnimatedContainer`. Stylized by a [`Sheet`](https://pub.dev/documentation/foil/latest/foil/Sheet-class.html) which simply wraps \
+Up first is named [`Foil.sheet`](https://pub.dev/documentation/foil/latest/foil/Foil/Foil.sheet.html) which functions like a self-contained
+`Foil` + `AnimatedContainer`. Stylized by a [`Sheet`](https://pub.dev/documentation/foil/latest/foil/Sheet-class.html) which simply wraps
 parameters for the `AnimatedContainer`.
 
 
-## `Steps`
-The basic premise of a gradient is to gradate between colors. \
+## [`Steps`](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+The basic premise of a gradient is to gradate between colors.
 Consider new `Steps` to be extensions of `Gradient`s, 
-one each for linear, radial, and sweep, \
-where the colors do not gradate but instead hard-transition. Like steps! \
+one each for linear, radial, and sweep,
+where the colors do not gradate but instead hard-transition. Like steps!
 `RadialSteps` are great for making rainbows.
-> ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif) \
+> ![three new gradients called \`Steps\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.stepBow.gif)
 > | `SweepSteps` | `RadialSteps` | `LinearSteps` |
 
-## `GradientUtils` Extensions
-Along with the three new variety of `Gradient`, this package \
+## [`GradientUtils` Extensions](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+Along with the three new variety of `Gradient`, this package
 provides 📋 `copyWith()` methods for each existing Flutter type.
 
 > ```dart
@@ -192,24 +203,25 @@ provides 📋 `copyWith()` methods for each existing Flutter type.
 > copyable parameter from the varieties. Most useful in a scenario where a
 > common parameter like `colors` or `transform` is to be applied to
 > some arbitrary `Gradient`.
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
 
-This makes it a cinch to pick out pre-rolled `Foils`  \
-yet tweak them for specific scenarios--such as changing \
+This makes it a cinch to pick out pre-rolled `Foils` 
+yet tweak them for specific scenarios--such as changing
 start and end points while maintaining the list of colors.
 
 What are `Foils`?
 
-## `Foils`
-Finally, this package is bundled with a selection of pre-defined gradients. \
+## [`Foils`](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+Finally, this package is bundled with a selection of pre-defined gradients.
 One such pre-rolled `Foils.oilslick` has opacity within each `Color`.
-- But consider that the `Foil` constructor accepts an overriding \
-`opacity` parameter for semi-transparent appearance even without \
+- But consider that the `Foil` constructor accepts an overriding
+`opacity` parameter for semi-transparent appearance even without
 `Gradient.colors` that have opacity.
 
 | [![four varieties of linear rainbow gradient](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.linear.gif) | The default gradient for this package is `Foils.linearLooping`, a nice 'n' simple `LinearGradient`. Reverse the order of colors with `Foils.linearReversed`. To only cycle through the rainbow once see `Foils.linearRainbow`. Click image to view full size. |
 | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
-Find other options like `Foils.gymClassParachute` and `Foils.sitAndSpin`, \
+Find other options like `Foils.gymClassParachute` and `Foils.sitAndSpin`,
 then tweak them to your liking with the 📋 `Gradient.copyWith()` methods. 
 
 | [![\`sitAndSpin\`, and \`gymClassParachute\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif) | [![\`oilslick\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.oilslick.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.oilslick.gif) |
@@ -218,23 +230,24 @@ then tweak them to your liking with the 📋 `Gradient.copyWith()` methods.
 | There is even a literal rainbow decal gradient made with the new `RadialSteps` type. Click image to view full size. | [![\`Foils.rainbow\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.rainbow.gif)](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.rainbow.gif) |
 | :------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
+<div style='text-align:right'><h6>📚 <a href='#table-of-contents'>TABLE OF CONTENTS</a></h6></div>
 
-# Reference
+# [Reference](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 ## 📖 [API Documentation](https://pub.dev/documentation/foil/latest)
 ## `Foil` Demo: 👷‍♂️ [source code](https://github.com/Zabadam/foil/tree/main/example/lib), 📲 [built APK](https://github.com/Zabadam/foil/blob/main/example/build/app/outputs/flutter-apk/app-release.apk)
 
-## 🛣️ Roadmap
-0. Make available a `Roll` of `Foil` feature such that a developer could \
-deploy a single gradient sheet in a region and mask that single gradient to any \
+## 🛣️ [Roadmap](#-table-of-contents 'Scroll up to 📚 Table of Contents')
+0. Make available a `Roll` of `Foil` feature such that a developer could
+deploy a single gradient sheet in a region and mask that single gradient to any
 child `Foil` widgets.
-   - `Roll`s are implemented now, but only offer to pass a `Gradient` to \
+   - `Roll`s are implemented now, but only offer to pass a `Gradient` to
    descendent `Foil`s--not to mask them from the same gradient.
 1. If this package's `Gradient` support expands further,
 much of that functionality could be forked to an independent package.
 2. Custom `GradientTransform`s will be investigated, 
 for example:  to deform `Foils.oilslick`.
 
-## 🐞 Bugs
+## 🐞 [Bugs](#-table-of-contents 'Scroll up to 📚 Table of Contents')
 0. Potential optimizations for `GradientTween`ing within `lerp()`,
 especially with the new `Steps` style gradients.
 1. Because this package's [`copyWith()`](#gradientutils-extensions) method
@@ -248,3 +261,28 @@ three [`Steps` gradients](#steps) added by this package.
    - In this scenario, until this bug is patched, consider transforming the 
    gradient prior to providing it to your `Crinkle`-animated `Foil` in order 
    to maintain the bespoke `Gradient`.
+
+<br />
+
+---
+
+## 🐸 [Zaba.app ― simple packages, simple names.](https://pub.dev/publishers/zaba.app/packages 'Other Flutter packages published by Zaba.app')
+
+<details>
+<summary>More by Zaba</summary>
+
+### Widgets to wrap other widgets
+- ## 🕹️ [xl](https://pub.dev/packages/xl 'implement accelerometer-fueled interactions with a layering paradigm')
+- ## 🌈 [foil](https://pub.dev/packages/foil 'implement accelerometer-reactive gradients in a cinch')
+- ## 📜 [curtains](https://pub.dev/packages/curtains 'provide animated shadow decorations for a scrollable to allude to unrevealed content')
+---
+### Container widget that wraps many functionalities
+- ## 🌟 [surface](https://pub.dev/packages/surface 'animated, morphing container with specs for Shape, Appearance, Filter, Tactility')
+---
+### Non-square `IconToo` + ext. `IconUtils` on `Icon`
+- ## 🙋‍♂️ [icon](https://pub.dev/packages/icon 'An extended Icon \"too\" for those that are not actually square, plus shadows support + IconUtils')
+---
+### Side-kick companions, work great alone & employed above
+- ## 🏓 [ball](https://pub.dev/packages/ball 'a bouncy, position-mirroring splash factory that\'s totally customizable')
+- ## 👥 [shadows](https://pub.dev/packages/shadows 'convert a double-based \`elevation\` + BoxShadow and List\<BoxShadow\> extensions')
+</details>

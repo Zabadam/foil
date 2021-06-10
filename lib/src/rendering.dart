@@ -5,8 +5,10 @@ library foil;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:spectrum/spectrum.dart';
+
 import 'models/transformation.dart';
-import 'utils.dart';
+// import 'utils.dart';
 
 /// {@macro static_foil}
 ///
@@ -190,7 +192,8 @@ class FoilShader extends RenderLimitedBox {
         ..maskRect = offset & size
         ..blendMode = _blendMode;
       context.pushLayer(layer!, super.paint, offset);
-    } else // (child == null)
+    } else {
       layer = null;
+    }
   }
 }
