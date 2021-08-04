@@ -4,11 +4,9 @@ library foil;
 
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-
 import 'package:sensors_plus/sensors_plus.dart';
 
-import '../models/scalar.dart';
+import '../common.dart';
 
 /// {@template sensor_callback}
 /// A callback used to provide a parent with actionable, normalized
@@ -20,12 +18,8 @@ typedef SensorCallback = void Function(double normalizedX, double normalizedY);
 
 /// {@macro sensor_listener}
 class SensorListener extends StatefulWidget {
-  /// {@template sensor_listener}
-  /// A widget that listens to accelerometer sensor data
-  /// and returns that data as an actionable `-1..1` value,
-  /// one each for the X axis and Y axis, as a [SensorCallback].
-  /// {@endtemplate}
-  const SensorListener({
+  /// {@macro sensor_listener}
+  const SensorListener._({
     Key? key,
     required this.disabled,
     required this.step,
@@ -33,6 +27,42 @@ class SensorListener extends StatefulWidget {
     required this.child,
     required this.onStep,
   }) : super(key: key);
+
+  /// {@template sensor_listener}
+  /// A widget that listens to accelerometer sensor data
+  /// and returns that data as an actionable `-1..1` value,
+  /// one each for the X axis and Y axis, as a [SensorCallback].
+  /// {@endtemplate}
+  factory SensorListener({
+    Key? key,
+    required bool disabled,
+    required Duration step,
+    required Scalar scalar,
+    required Widget child,
+    required SensorCallback onStep,
+  })
+      // { if (!_cache.containsKey(child)) {
+      //     _cache[child] = SensorListener._(
+      //       key: key,
+      //       disabled: disabled,
+      //       step: step,
+      //       scalar: scalar,
+      //       onStep: onStep,
+      //       child: child,
+      //     );
+      //   }
+      //   return _cache[child]!; }
+      =>
+      SensorListener._(
+        key: key,
+        disabled: disabled,
+        step: step,
+        scalar: scalar,
+        onStep: onStep,
+        child: child,
+      );
+
+  // static final Map<Widget, SensorListener> _cache = {};
 
   /// If `disabled` is `true`, then this `SensorListener`
   /// will stop making [onStep] invocations.
@@ -81,8 +111,9 @@ class _SensorListenerState extends State<SensorListener> {
     y = -normalize(accelEvent.y) * widget.scalar.vertical;
     if (widget.disabled) {
       accelSubscription.pause();
-    } else
+    } else {
       accelSubscription.resume();
+    }
     widget.onStep(x, y);
   }
 

@@ -1,7 +1,7 @@
 /// Provides `Scalar` parameter object for scaling axis-based double data.
 library foil;
 
-import 'package:flutter/foundation.dart';
+import '../common.dart';
 
 /// A `Scalar` provides an opportunity to scale axis-based `double` data.
 /// Default constructor takes named paramters per axis. Use [Scalar.xy]

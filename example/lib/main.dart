@@ -307,10 +307,12 @@ class _DemonstrationState extends State<Demonstration> {
                     child: Foil(
                       isUnwrapped: unwrapped,
                       opacity: 0.3,
-                      // Foil comes with GradientUtils!
-                      gradient: Foils.sitAndSpin.copyWith(
-                        center: const Alignment(-1, -2.5),
-                      ),
+                      // Foil comes with GradientUtils from package:spectrum!
+                      gradient: Foils.sitAndSpin
+                      // .copyWith(
+                      //   center: const Alignment(-1, -2.5),
+                      // )
+                      ,
                       child: TradingCard(
                         card: cards.first,
                         width: 400,

@@ -4,8 +4,7 @@
 /// for this package.
 library foil;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
+import '../common.dart';
 
 /// The definition of a `Function` that positionally accepts a \
 /// `double x` then `double y` and returns a [GradientTransform], \

@@ -2,13 +2,7 @@
 /// a [SingleChildRenderObjectWidget] and [RenderProxyBox] respectively.
 library foil;
 
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:spectrum/spectrum.dart';
-
-import 'models/transformation.dart';
-// import 'utils.dart';
+import 'common.dart';
 
 /// {@macro static_foil}
 ///
@@ -81,7 +75,7 @@ class FoilShader extends RenderLimitedBox {
   /// {@template foil_shader}
   /// A `FoilShader` is a [RenderProxyBox] responsible for
   /// the positioning and painting of the masked gradient of a `Foil`
-  /// directly onto the child.
+  /// directly over the child.
   /// {@endtemplate}
   FoilShader(
     this._gradient,
@@ -168,6 +162,7 @@ class FoilShader extends RenderLimitedBox {
       /// then `copyWith` the transform. Otherwise don't copyWith,
       /// as currently that method only returns one of the three
       /// pre-defined FLutter `Gradient`s or new Foil `Steps`.
+      ///
       /// (What if a developer is using a bespoke `Gradient`?)
       /// TODO: Rethink `Gradient.copyWith`
       final gradient = (_rolloutX[0] != 0 || _rolloutY[0] != 0)

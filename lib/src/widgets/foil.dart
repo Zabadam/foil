@@ -1,25 +1,18 @@
-/// Provides the [new Foil] wrapper widget, as well as gradient-building
-/// [new Foil.colored] and self-contained [new Foil.sheet].
+/// Provides the [Foil] wrapper widget, as well as gradient-building
+/// [Foil.colored] and self-contained [Foil.sheet].
 library foil;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/material.dart';
+import '../common.dart';
 
-import 'package:spectrum/spectrum.dart';
-
-import '../animation.dart';
-import '../models/crinkle.dart';
-import '../models/foils.dart';
-import '../models/scalar.dart';
-import '../models/sheet.dart';
 import 'roll.dart';
 import 'sensors.dart';
 
-/// | ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif) | Wrap a widget with [new Foil], providing a rainbow shimmer that twinkles as the accelerometer moves. |
-/// | :-: | :- |
-/// - Other options include gradient-building [new Foil.colored] &
-/// the self-contained [new Foil.sheet].
+/// ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif)
+///
+/// Wrap a widget with [Foil], providing a rainbow shimmer that twinkles as the
+/// accelerometer moves.
+/// - Other options include gradient-building [Foil.colored] &
+/// the self-contained [Foil.sheet].
 ///
 /// | ![unwrapping Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_tiny.gif) | Paramater `bool` [isUnwrapped] toggles a `Foil`'s invisibility. Default is `false.` |
 /// | :-: | :- |
@@ -45,8 +38,10 @@ import 'sensors.dart';
 /// Upon completion of any tween to a new [gradient], a `Foil` will
 /// call [onEnd], an optional void callback.
 class Foil extends StatefulWidget {
-  /// | ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif) | Wrap a widget with `Foil`, providing a rainbow shimmer that twinkles as the accelerometer moves. |
-  /// | :-: | :- |
+  /// ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif)
+  ///
+  /// Wrap a widget with [Foil], providing a rainbow shimmer that twinkles as
+  /// the accelerometer moves.
   ///
   /// The "rainbow" may be any [gradient] of choice. \
   /// Some pre-rolled are available in [Foils].
@@ -55,19 +50,19 @@ class Foil extends StatefulWidget {
   /// | :-: | :- |
   ///
   /// ### Accelerometer
-  /// Disable this `Foil`'s reaction to accelerometer sensor motion by \
+  /// Disable this `Foil`'s reaction to accelerometer sensor motion by
   /// `useSensor: false`. Default is `true`.
   ///
-  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion \
-  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity] \
+  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion
+  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity]
   /// which has both a `horizontal` and `vertical` multiplier of `+1.0`.
   ///
-  /// (Not to be confused with a potential and optional `Crinkle.scalar`, \
-  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`. \
+  /// (Not to be confused with a potential and optional `Crinkle.scalar`,
+  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`.
   /// This [Scalar] is used to scale axis-dependent animation values.)
   ///
   /// ### Using a `Roll` of `Foil`
-  /// Optionally a [Roll] may be deployed higher up in the widget tree. \
+  /// Optionally a [Roll] may be deployed higher up in the widget tree.
   /// This ancestor offers two additional features to any [Foil] underneath it.
   ///
   /// Either declare a [Roll.gradient] to which any descendent `Foil`
@@ -78,7 +73,7 @@ class Foil extends StatefulWidget {
   ///
   /// ### Transitioning
   /// Control how rapidly this `Foil` transforms its [gradient]
-  /// with [speed] and define the animation [curve]. \
+  /// with [speed] and define the animation [curve].
   /// Defaults are `150ms` and [Curves.ease].
   ///
   /// Furthermore, provide [duration] to dictate how long
@@ -87,10 +82,10 @@ class Foil extends StatefulWidget {
   /// over which [gradient] will [Gradient.lerp] to an appropriately-`Type`d
   /// transparent gradient for tweening.
   ///
-  /// There is hard-coded recognition for linear, radial, and sweep [Gradient]s, \
-  /// as well as the additional [LinearSteps], [RadialSteps], and [SweepSteps] \
+  /// There is hard-coded recognition for linear, radial, and sweep [Gradient]s,
+  /// as well as the additional [LinearSteps], [RadialSteps], and [SweepSteps]
   /// variants that this package provides. Falls back to [LinearGradient]
-  /// ([nillLG]) if `Type` cannot be matched.
+  /// ([NillGradients].linear) if type cannot be matched.
   ///
   /// Upon completion of any tween to a new [gradient], this `Foil` will
   /// call [onEnd], an optional void callback.
@@ -103,35 +98,38 @@ class Foil extends StatefulWidget {
     this.blendMode = BlendMode.srcATop,
     this.scalar = const Scalar(),
     this.unwrappedGradient,
+    this.isAgressive = false,
     required this.child,
     this.speed = const Duration(milliseconds: 150),
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.ease,
     this.onEnd,
-  })  : sheet = const Sheet(),
-        _box = null,
+  })  : sheet = const Sheet(), // irrelevant in this context
+        _box = null, // irrelevant in this context
         super(key: key);
 
-  /// | ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif) | Wrap a widget with colored `Foil`, providing a dynamic shimmer that twinkles as the accelerometer moves, colored by a looping [LinearGradient] formed from `colors`. |
-  /// | :-: | :- |
+  /// ![accelerometer-animated Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/foil_tiny.gif)
+  ///
+  /// Wrap a widget with [Foil], providing a rainbow shimmer that twinkles as
+  /// the accelerometer moves.
   ///
   /// | ![unwrapping Foil](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_tiny.gif) | Paramater `bool` [isUnwrapped] toggles a `Foil`'s invisibility. Default is `false.` |
   /// | :-: | :- |
   ///
   /// ### Accelerometer
-  /// Disable this `Foil`'s reaction to accelerometer sensor motion by \
+  /// Disable this `Foil`'s reaction to accelerometer sensor motion by
   /// `useSensor: false`. Default is `true`.
   ///
-  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion \
-  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity] \
+  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion
+  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity]
   /// which has both a `horizontal` and `vertical` multiplier of `+1.0`.
   ///
-  /// (Not to be confused with a potential and optional `Crinkle.scalar`, \
-  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`. \
+  /// (Not to be confused with a potential and optional `Crinkle.scalar`,
+  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`.
   /// This [Scalar] is used to scale axis-dependent animation values.)
   ///
   /// ### Using a `Roll` of `Foil`
-  /// Optionally a [Roll] may be deployed higher up in the widget tree. \
+  /// Optionally a [Roll] may be deployed higher up in the widget tree.
   /// This ancestor offers two additional features to any [Foil] underneath it.
   ///
   /// Either declare a [Roll.gradient] to which any descendent `Foil`
@@ -142,7 +140,7 @@ class Foil extends StatefulWidget {
   ///
   /// ### Transitioning
   /// Control how rapidly this `Foil` transforms its [gradient]
-  /// with [speed] and define the animation [curve]. \
+  /// with [speed] and define the animation [curve].
   /// Defaults are `150ms` and [Curves.ease].
   ///
   /// Furthermore, provide [duration] to dictate how long
@@ -161,13 +159,14 @@ class Foil extends StatefulWidget {
     this.blendMode = BlendMode.srcATop,
     this.scalar = Scalar.identity,
     this.unwrappedGradient,
+    this.isAgressive = true,
     required this.child,
     this.speed = const Duration(milliseconds: 150),
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.ease,
     this.onEnd,
-  })  : sheet = const Sheet(),
-        _box = null,
+  })  : sheet = const Sheet(), // irrelevant in this context
+        _box = null, // irrelevant in this context
         // TODO: update default
         gradient = LinearGradient(
           colors: colors + colors.reversed.toList(),
@@ -187,19 +186,19 @@ class Foil extends StatefulWidget {
   /// | :-: | :- |
   ///
   /// ### Accelerometer
-  /// Disable this `Foil`'s reaction to accelerometer sensor motion by \
+  /// Disable this `Foil`'s reaction to accelerometer sensor motion by
   /// `useSensor: false`. Default is `true`.
   ///
-  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion \
-  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity] \
+  /// Influence the intensity of this `Foil`'s reaction to accelerometer motion
+  /// by providing a custom `Scalar` [scalar]. Default is [Scalar.identity]
   /// which has both a `horizontal` and `vertical` multiplier of `+1.0`.
   ///
-  /// (Not to be confused with a potential and optional `Crinkle.scalar`, \
-  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`. \
+  /// (Not to be confused with a potential and optional `Crinkle.scalar`,
+  /// provided by wrapping `Foil` in a `Roll` and declaring `Roll.crinkle`.
   /// This [Scalar] is used to scale axis-dependent animation values.)
   ///
   /// ### Using a `Roll` of `Foil`
-  /// Optionally a [Roll] may be deployed higher up in the widget tree. \
+  /// Optionally a [Roll] may be deployed higher up in the widget tree.
   /// This ancestor offers two additional features to any [Foil] underneath it.
   ///
   /// Either declare a [Roll.gradient] to which any descendent `Foil`
@@ -210,7 +209,7 @@ class Foil extends StatefulWidget {
   ///
   /// ### Transitioning
   /// Control how rapidly this `Foil` transforms its [gradient]
-  /// with [speed] and define the animation [curve]. \
+  /// with [speed] and define the animation [curve].
   /// Defaults are `150ms` and [Curves.ease].
   ///
   /// Furthermore, provide [duration] to dictate how long
@@ -219,10 +218,10 @@ class Foil extends StatefulWidget {
   /// over which [gradient] will [Gradient.lerp] to an appropriately-`Type`d
   /// transparent gradient for tweening.
   ///
-  /// There is hard-coded recognition for linear, radial, and sweep [Gradient]s, \
-  /// as well as the additional [LinearSteps], [RadialSteps], and [SweepSteps] \
+  /// There is hard-coded recognition for linear, radial, and sweep [Gradient]s,
+  /// as well as the additional [LinearSteps], [RadialSteps], and [SweepSteps]
   /// variants that this package provides. Falls back to [LinearGradient]
-  /// ([nillLG]) if `Type` cannot be matched.
+  /// ([NillGradients].linear) if type cannot be matched.
   ///
   /// Upon completion of any tween to a new [gradient], this `Foil` will
   /// call [onEnd], an optional void callback.
@@ -236,6 +235,7 @@ class Foil extends StatefulWidget {
     this.blendMode = BlendMode.srcATop,
     this.scalar = Scalar.identity,
     this.unwrappedGradient,
+    this.isAgressive = true,
     Widget? child,
     this.speed = const Duration(milliseconds: 150),
     this.duration = const Duration(milliseconds: 500),
@@ -261,11 +261,11 @@ class Foil extends StatefulWidget {
         ),
         super(key: key);
 
-  /// If [isUnwrapped] is `true`, this `Foil`'s [gradient] will be inactive. \
+  /// If [isUnwrapped] is `true`, this `Foil`'s [gradient] will be inactive.
   /// Default is `false`.
   ///
-  /// Changing [isUnwrapped] will cause a smooth intrinsic animation of this \
-  /// `Foil`'s [gradient] to an appropriately-`Type`d, if possible, transparent \
+  /// Changing [isUnwrapped] will cause a smooth intrinsic animation of this
+  /// `Foil`'s [gradient] to an appropriately-`Type`d, if possible, transparent
   /// `Gradient` over period of [duration] (default is `500ms`).
   /// - Override the unwrapped-state `Gradient` with [unwrappedGradient].
   ///
@@ -292,13 +292,13 @@ class Foil extends StatefulWidget {
   /// ### Using a `Roll` of `Foil`
   /// Optionally a [Roll] may be deployed higher up in the widget tree.
   ///
-  /// Declare a [Roll.gradient] to which any descendent `Foil` may fallback, \
+  /// Declare a [Roll.gradient] to which any descendent `Foil` may fallback,
   /// though this [gradient] will override any provided by a `Roll`.
   ///
   /// ### Pre-rolled `Foils`
   /// Consider some pre-rolled [Foils] that come with this package.
   ///
-  /// The default is `Foils.linearLooping` if this `Foil` is not given \
+  /// The default is `Foils.linearLooping` if this `Foil` is not given
   /// a [gradient] and no ancestral `Roll` provides one either.
   ///
   /// ![\`sitAndSpin\`, and \`gymClassParachute\`](https://raw.githubusercontent.com/Zabadam/foil/master/doc/Foils.gymClass.gif) \
@@ -314,7 +314,7 @@ class Foil extends StatefulWidget {
   /// By default, an attempt is made to match the `Type` of gradient to an
   /// appropriately-typed empty gradient.
   ///
-  /// See [nillLG], et al.
+  /// See [NillGradients].linears, et al.
   ///
   /// [![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration_small.gif)]((https://raw.githubusercontent.com/Zabadam/foil/master/doc/duration.gif)) \
   /// ![animated unwrapping](https://raw.githubusercontent.com/Zabadam/foil/master/doc/isUnwrapped.gif)
@@ -362,6 +362,9 @@ class Foil extends StatefulWidget {
   /// Those `Crinkle` animations can be applied regardless of the value
   /// of [useSensor].
   final bool useSensor;
+
+  /// Control the method used to lerp the gradients.
+  final bool isAgressive;
 
   /// Wrap this `child` in `Foil`. \
   /// Ideally, for performance, a single static `Widget`.
@@ -468,6 +471,7 @@ class _FoilState extends State<Foil> {
   @override
   Widget build(BuildContext context) {
     /// For inversion of axes for accelerometer data based on orientation.
+    /// TODO: Fix on web resize
     final isPortrait =
         (MediaQuery.maybeOf(context)?.orientation ?? Orientation.portrait) ==
             Orientation.portrait;
@@ -486,7 +490,7 @@ class _FoilState extends State<Foil> {
     /// For smoother `lerp`s when unwrapping `Foil`.
     final effectiveGradient = widget.isUnwrapped
         ? widget.unwrappedGradient ?? gradient.asNill
-        : gradient.scale(widget.opacity);
+        : gradient.scale(widget.opacity); // scale() controls overall opacity
 
     /// The `SensorListener` and `AnimatedFoil` need to be built regardless of
     /// whether a parent `Roll.crinkle.isAnimated` or not (or even exists).
@@ -505,6 +509,7 @@ class _FoilState extends State<Foil> {
             rolloutY: [rollY, (isPortrait ? -normalizedY : -normalizedX)],
             blendMode: widget.blendMode,
             useSensor: widget.useSensor,
+            isAgressive: widget.isAgressive,
             speed: widget.speed,
             duration: widget.duration,
             curve: widget.curve,

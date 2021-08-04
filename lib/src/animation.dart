@@ -6,14 +6,8 @@
 // through some means (ParentData?), though they are both quite simple already.
 library foil;
 
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:spectrum/spectrum.dart';
-
-import '../foil.dart';
-// import 'models/tween.dart';
-import 'rendering.dart';
+import 'common.dart';
+import 'widgets/roll.dart';
 
 /// {@macro animated_foil}
 class AnimatedFoil extends ImplicitlyAnimatedWidget {
@@ -32,6 +26,7 @@ class AnimatedFoil extends ImplicitlyAnimatedWidget {
     required this.rolloutY,
     required this.blendMode,
     required this.useSensor,
+    required this.isAgressive,
     required this.child,
     required this.speed,
     required Duration duration,
@@ -65,6 +60,9 @@ class AnimatedFoil extends ImplicitlyAnimatedWidget {
   /// {@endtemplate}
   final bool useSensor;
 
+  /// Control the method used to lerp the gradients.
+  final bool isAgressive;
+
   /// The `Widget` to wrap in [RolledOutFoil].
   final Widget child;
 
@@ -82,10 +80,11 @@ class _AnimatedFoilState extends AnimatedWidgetBaseState<AnimatedFoil> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) => _gradient = visitor(
-          _gradient,
-          widget.gradient,
-          (dynamic value) => GradientTween(begin: value as Gradient))
-      as GradientTween?;
+      _gradient,
+      widget.gradient,
+      (dynamic value) => GradientTween(
+          begin: value as Gradient,
+          isAgressive: widget.isAgressive)) as GradientTween?;
 
   @override
   Widget build(BuildContext context) => RolledOutFoil(

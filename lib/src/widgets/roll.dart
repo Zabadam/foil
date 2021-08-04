@@ -3,12 +3,7 @@
 /// to apply to each `Foil` underneath it.
 library foil;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
-
-import '../models/crinkle.dart';
-import '../models/scalar.dart';
-import '../models/transformation.dart';
+import '../common.dart';
 
 /// {@macro roll}
 class Roll extends StatefulWidget with Diagnosticable {

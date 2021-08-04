@@ -1,11 +1,7 @@
 /// Provides the `Crinkle` animation parameter object for `Roll`s.
 library foil;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
-
-import 'scalar.dart';
-import 'transformation.dart';
+import '../common.dart';
 
 /// Provide animation to a piece of `Foil` by wrapping it in a `Roll`
 /// with a specified `Crinkle`.
